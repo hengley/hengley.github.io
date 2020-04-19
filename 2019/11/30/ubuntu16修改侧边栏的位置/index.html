@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="article:published_time" content="2019-11-30T11:23:17.000Z">
-<meta property="article:modified_time" content="2020-03-09T05:40:45.000Z">
+<meta property="article:modified_time" content="2020-04-19T15:38:19.882Z">
 <meta property="article:author" content="zh">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GLib-GIO-Message: Using the ‘memory‘ GSettings backend.  Your<span class="built_in"> settings </span>will <span class="keyword">not</span> be saved <span class="keyword">or</span> shared with other applications.</span><br></pre></td></tr></table></figure>
 <p>3.输入命令，再执行上一步</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">GIO_EXTRA_MODULES</span>=/usr/lib/x86_64-linux-gnu/gio/modules/</span><br></pre></td></tr></table></figure>
-<p>4 <a href="http://blog.csdn.net/wuguangbin1230/article/details/77524440">永久解决</a>：</p>
+<p>4 <a href="http://blog.csdn.net/wuguangbin1230/article/details/77524440" target="_blank" rel="noopener">永久解决</a>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit ~/.bashrc</span><br></pre></td></tr></table></figure>
 <p>然后把粘贴在最后一行</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">GIO_EXTRA_MODULES</span>=/usr/lib/x86_64-linux-gnu/gio/modules/</span><br></pre></td></tr></table></figure>
