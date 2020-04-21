@@ -125,13 +125,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-20T15:32:38.853Z">2020-04-20</time>
+                <time class="level-item has-text-grey" datetime="2020-04-21T05:31:14.000Z">2020-04-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E8%A7%A3%E5%86%B3%E9%94%99%E8%AF%AF/">解决错误</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 516 个字)
+                    3 分钟 读完 (大约 410 个字)
                 </span>
                 
                 
@@ -140,35 +144,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/04/20/%E6%B5%8B%E8%AF%95%E5%86%85%E5%AD%98/">测试内存</a>
+                <a class="has-link-black-ter" href="/2020/04/21/ubuntu%20vmware15%E4%B8%8B%E5%AE%89%E8%A3%85win10%E6%8A%A5VT-X%E6%9C%AA%E5%BC%80%E5%90%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">ubuntu vmware15下安装win10报VT-X未开启的解决方法</a>
             
         </h1>
         <div class="content">
-            <h2 id="程序使用了多少内存？"><a href="#程序使用了多少内存？" class="headerlink" title="程序使用了多少内存？"></a>程序使用了多少内存？</h2><p>现在我们对计时有了较好的理解，那么让我们继续弄清楚程序使用了多少内存。我们很幸运，Fabian Pedregosa模仿Robert Kern的line_profiler实现了一个不错的内存分析器。</p>
-<p>首先使用pip安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -U memory_profiler</span><br><span class="line">$ pip install psutil</span><br></pre></td></tr></table></figure>
-<p>（这里建议安装psutil包，因为它可以大大改善memory_profiler的性能）。</p>
-<p>就像line_profiler，memory_profiler也需要在感兴趣的函数上面装饰@profile装饰器：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@profile</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">primes</span><span class="params">(n)</span>:</span> </span><br><span class="line">    ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<p>想要观察你的函数使用了多少内存，像下面这样执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python -m memory_profiler primes.py</span><br></pre></td></tr></table></figure>
-<p>一旦程序退出，你将会看到看起来像这样的输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Filename: primes.py</span><br><span class="line"></span><br><span class="line">Line <span class="comment">#    Mem usage  Increment   Line Contents</span></span><br><span class="line">==============================================</span><br><span class="line">     2                           @profile</span><br><span class="line">     3    7.9219 MB  0.0000 MB   def primes(n): </span><br><span class="line">     4    7.9219 MB  0.0000 MB       <span class="keyword">if</span> n==2:</span><br><span class="line">     5                                   <span class="built_in">return</span> [2]</span><br><span class="line">     6    7.9219 MB  0.0000 MB       <span class="keyword">elif</span> n&lt;2:</span><br><span class="line">     7                                   <span class="built_in">return</span> []</span><br><span class="line">     8    7.9219 MB  0.0000 MB       s=range(3,n+1,2)</span><br><span class="line">     9    7.9258 MB  0.0039 MB       mroot = n ** 0.5</span><br><span class="line">    10    7.9258 MB  0.0000 MB       half=(n+1)/2-1</span><br><span class="line">    11    7.9258 MB  0.0000 MB       i=0</span><br><span class="line">    12    7.9258 MB  0.0000 MB       m=3</span><br><span class="line">    13    7.9297 MB  0.0039 MB       <span class="keyword">while</span> m &lt;= mroot:</span><br><span class="line">    14    7.9297 MB  0.0000 MB           <span class="keyword">if</span> s[i]:</span><br><span class="line">    15    7.9297 MB  0.0000 MB               j=(m*m-3)/2</span><br><span class="line">    16    7.9258 MB -0.0039 MB               s[j]=0</span><br><span class="line">    17    7.9297 MB  0.0039 MB               <span class="keyword">while</span> j&lt;half:</span><br><span class="line">    18    7.9297 MB  0.0000 MB                   s[j]=0</span><br><span class="line">    19    7.9297 MB  0.0000 MB                   j+=m</span><br><span class="line">    20    7.9297 MB  0.0000 MB           i=i+1</span><br><span class="line">    21    7.9297 MB  0.0000 MB           m=2*i+3</span><br><span class="line">    22    7.9297 MB  0.0000 MB       <span class="built_in">return</span> [2]+[x <span class="keyword">for</span> x <span class="keyword">in</span> s <span class="keyword">if</span> x]</span><br></pre></td></tr></table></figure>
-
-
-
-<p>首先安装memory_profiler和psutil（psutil主要用于提高memory_profile的性能，建议安装）（可使用pip直接安装）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install memory_profiler </span><br><span class="line">pip install psutil</span><br></pre></td></tr></table></figure>
-<p>具体运行方式为如下：（在待检测代码所在目录中打开命令行运行如下代码）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mprof run test.py</span><br></pre></td></tr></table></figure>
-<p>结果会生成一个.dat文件，如”mprofile_20160716170529.dat”，里面记录了内存随时间的变化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mprof plot</span><br></pre></td></tr></table></figure>
-<p>使用该命令以图片的形式展示出来</p>
-<p>如果在运行的时候出现如下的gbk解码错误，解决方案是首先进入 memory_profiler.py文件中，找到第1131行，</p>
-<p>把with open(filename) as f: 更改成 with open(filename, encoding=’utf-8’) as f：！！！<br><img src="https://img-blog.csdnimg.cn/20200313100846977.jpg" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020031310091439.jpg" alt="在这里插入图片描述"></p>
-
+            <p>ubuntu vmware error,This host supports Intel VT-x, but Intel VT-x is disabled</p>
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/04/21/ubuntu%20vmware15%E4%B8%8B%E5%AE%89%E8%A3%85win10%E6%8A%A5VT-X%E6%9C%AA%E5%BC%80%E5%90%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -197,13 +187,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-20T15:32:38.849Z">2020-04-20</time>
+                <time class="level-item has-text-grey" datetime="2020-04-20T11:23:17.000Z">2020-04-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%8A%80%E6%9C%AF%E5%B7%A5%E5%85%B7/">技术工具</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 409 个字)
+                    3 分钟 读完 (大约 517 个字)
                 </span>
                 
                 
@@ -212,17 +206,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/04/20/ubuntu%20vmware15%E4%B8%8B%E5%AE%89%E8%A3%85win10%E6%8A%A5VT-X%E6%9C%AA%E5%BC%80%E5%90%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">ubuntu vmware15下安装win10报VT-X未开启的解决方法</a>
+                <a class="has-link-black-ter" href="/2020/04/20/%E6%B5%8B%E8%AF%95%E5%86%85%E5%AD%98/">测试内存</a>
             
         </h1>
         <div class="content">
-            <p>ubuntu vmware error,This host supports Intel VT-x, but Intel VT-x is disabled</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">This host supports Intel VT-x, but Intel VT-x is disabled.</span><br><span class="line"></span><br><span class="line">Intel VT-x might be disabled <span class="keyword">if</span> it has been disabled <span class="keyword">in</span> the BIOS/firmware</span><br><span class="line"></span><br><span class="line">settings or the host has not been power-cycled since changing this setting.</span><br><span class="line"></span><br><span class="line">(1) Verify that the BIOS/firmware settings <span class="built_in">enable</span> Intel VT-x and <span class="built_in">disable</span> <span class="string">'trusted execution.'</span></span><br><span class="line"></span><br><span class="line">(2) Power-cycle the host <span class="keyword">if</span> either of these BIOS/firmware settings have been changed.</span><br><span class="line"></span><br><span class="line">(3) Power-cycle the host <span class="keyword">if</span> you have not <span class="keyword">done</span> so since installing VMware Workstation.</span><br><span class="line"></span><br><span class="line">(4) Update the host<span class="string">'s BIOS/firmware to the latest version.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">For more detailed information, seehttp://vmware.com/info?id=152。</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">虚拟机已经被配置为64位客户操作系统。然而，64位操作不可用。</span><br><span class="line">此主机支持英特尔虚拟化技术（VT-x），但是英特尔虚拟化技术被禁用了。</span><br><span class="line">如果在BIOS固件设置中，禁用了VT-x，或者改变了这个设置但还没重启主机，它都是无效的。</span><br><span class="line">（1） 检查BIOS/固件设置，启用VT和禁用 <span class="string">'trusted execution.'</span></span><br><span class="line">（2） 如果更改了这些BIOS/固件设置，重启主机。</span><br><span class="line">（3） 安装VMware Workstation，重启主机.</span><br><span class="line">（4） 更新BIOS/固件到最新版本。</span><br><span class="line">更多详细信息，请参阅 http://vmware.com/info?id=152 。</span><br></pre></td></tr></table></figure>
-<p>解决办法：<br>重启开机按F2进入启动菜单界面，选择按F10进入BIOS界面，使用箭头键，滚动到系统设置（configuration）选项，<br>然后方向键滚动到 处理器虚拟化技术（Intel  Virtualization Technology）选项，按enter键，选择启用（Enabled），<br>最后按F10键以保存并退出即可开启VT功能。重新启动计算机。</p>
-
+            <h2 id="程序使用了多少内存？"><a href="#程序使用了多少内存？" class="headerlink" title="程序使用了多少内存？"></a>程序使用了多少内存？</h2><p>现在我们对计时有了较好的理解，那么让我们继续弄清楚程序使用了多少内存。我们很幸运，Fabian Pedregosa模仿Robert Kern的line_profiler实现了一个不错的内存分析器。</p>
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/04/20/%E6%B5%8B%E8%AF%95%E5%86%85%E5%AD%98/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -822,7 +820,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            20
+                            22
                         </p>
                     </a>
                 </div>
@@ -874,7 +872,7 @@
                 <span class="level-item">技术工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">12</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/%E7%AE%97%E6%B3%95%E5%A4%A7%E5%85%A8/">
@@ -890,7 +888,7 @@
                 <span class="level-item">解决错误</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li>
             </ul>
@@ -923,7 +921,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Ubuntu/">
                         <span class="tag">Ubuntu</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1007,6 +1005,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ubuntu/">
                         <span class="tag">ubuntu</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/vmware/">
+                        <span class="tag">vmware</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1014,6 +1019,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/wordcount/">
                         <span class="tag">wordcount</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%86%85%E5%AD%98/">
+                        <span class="tag">内存</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
