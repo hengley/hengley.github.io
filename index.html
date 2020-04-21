@@ -125,6 +125,132 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-20T15:32:38.853Z">2020-04-20</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 516 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/20/%E6%B5%8B%E8%AF%95%E5%86%85%E5%AD%98/">测试内存</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="程序使用了多少内存？"><a href="#程序使用了多少内存？" class="headerlink" title="程序使用了多少内存？"></a>程序使用了多少内存？</h2><p>现在我们对计时有了较好的理解，那么让我们继续弄清楚程序使用了多少内存。我们很幸运，Fabian Pedregosa模仿Robert Kern的line_profiler实现了一个不错的内存分析器。</p>
+<p>首先使用pip安装:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -U memory_profiler</span><br><span class="line">$ pip install psutil</span><br></pre></td></tr></table></figure>
+<p>（这里建议安装psutil包，因为它可以大大改善memory_profiler的性能）。</p>
+<p>就像line_profiler，memory_profiler也需要在感兴趣的函数上面装饰@profile装饰器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@profile</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">primes</span><span class="params">(n)</span>:</span> </span><br><span class="line">    ...</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>想要观察你的函数使用了多少内存，像下面这样执行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python -m memory_profiler primes.py</span><br></pre></td></tr></table></figure>
+<p>一旦程序退出，你将会看到看起来像这样的输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Filename: primes.py</span><br><span class="line"></span><br><span class="line">Line <span class="comment">#    Mem usage  Increment   Line Contents</span></span><br><span class="line">==============================================</span><br><span class="line">     2                           @profile</span><br><span class="line">     3    7.9219 MB  0.0000 MB   def primes(n): </span><br><span class="line">     4    7.9219 MB  0.0000 MB       <span class="keyword">if</span> n==2:</span><br><span class="line">     5                                   <span class="built_in">return</span> [2]</span><br><span class="line">     6    7.9219 MB  0.0000 MB       <span class="keyword">elif</span> n&lt;2:</span><br><span class="line">     7                                   <span class="built_in">return</span> []</span><br><span class="line">     8    7.9219 MB  0.0000 MB       s=range(3,n+1,2)</span><br><span class="line">     9    7.9258 MB  0.0039 MB       mroot = n ** 0.5</span><br><span class="line">    10    7.9258 MB  0.0000 MB       half=(n+1)/2-1</span><br><span class="line">    11    7.9258 MB  0.0000 MB       i=0</span><br><span class="line">    12    7.9258 MB  0.0000 MB       m=3</span><br><span class="line">    13    7.9297 MB  0.0039 MB       <span class="keyword">while</span> m &lt;= mroot:</span><br><span class="line">    14    7.9297 MB  0.0000 MB           <span class="keyword">if</span> s[i]:</span><br><span class="line">    15    7.9297 MB  0.0000 MB               j=(m*m-3)/2</span><br><span class="line">    16    7.9258 MB -0.0039 MB               s[j]=0</span><br><span class="line">    17    7.9297 MB  0.0039 MB               <span class="keyword">while</span> j&lt;half:</span><br><span class="line">    18    7.9297 MB  0.0000 MB                   s[j]=0</span><br><span class="line">    19    7.9297 MB  0.0000 MB                   j+=m</span><br><span class="line">    20    7.9297 MB  0.0000 MB           i=i+1</span><br><span class="line">    21    7.9297 MB  0.0000 MB           m=2*i+3</span><br><span class="line">    22    7.9297 MB  0.0000 MB       <span class="built_in">return</span> [2]+[x <span class="keyword">for</span> x <span class="keyword">in</span> s <span class="keyword">if</span> x]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先安装memory_profiler和psutil（psutil主要用于提高memory_profile的性能，建议安装）（可使用pip直接安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install memory_profiler </span><br><span class="line">pip install psutil</span><br></pre></td></tr></table></figure>
+<p>具体运行方式为如下：（在待检测代码所在目录中打开命令行运行如下代码）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mprof run test.py</span><br></pre></td></tr></table></figure>
+<p>结果会生成一个.dat文件，如”mprofile_20160716170529.dat”，里面记录了内存随时间的变化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mprof plot</span><br></pre></td></tr></table></figure>
+<p>使用该命令以图片的形式展示出来</p>
+<p>如果在运行的时候出现如下的gbk解码错误，解决方案是首先进入 memory_profiler.py文件中，找到第1131行，</p>
+<p>把with open(filename) as f: 更改成 with open(filename, encoding=’utf-8’) as f：！！！<br><img src="https://img-blog.csdnimg.cn/20200313100846977.jpg" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020031310091439.jpg" alt="在这里插入图片描述"></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+            
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-20T15:32:38.849Z">2020-04-20</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 409 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/20/ubuntu%20vmware15%E4%B8%8B%E5%AE%89%E8%A3%85win10%E6%8A%A5VT-X%E6%9C%AA%E5%BC%80%E5%90%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">ubuntu vmware15下安装win10报VT-X未开启的解决方法</a>
+            
+        </h1>
+        <div class="content">
+            <p>ubuntu vmware error,This host supports Intel VT-x, but Intel VT-x is disabled</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">This host supports Intel VT-x, but Intel VT-x is disabled.</span><br><span class="line"></span><br><span class="line">Intel VT-x might be disabled <span class="keyword">if</span> it has been disabled <span class="keyword">in</span> the BIOS/firmware</span><br><span class="line"></span><br><span class="line">settings or the host has not been power-cycled since changing this setting.</span><br><span class="line"></span><br><span class="line">(1) Verify that the BIOS/firmware settings <span class="built_in">enable</span> Intel VT-x and <span class="built_in">disable</span> <span class="string">'trusted execution.'</span></span><br><span class="line"></span><br><span class="line">(2) Power-cycle the host <span class="keyword">if</span> either of these BIOS/firmware settings have been changed.</span><br><span class="line"></span><br><span class="line">(3) Power-cycle the host <span class="keyword">if</span> you have not <span class="keyword">done</span> so since installing VMware Workstation.</span><br><span class="line"></span><br><span class="line">(4) Update the host<span class="string">'s BIOS/firmware to the latest version.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">For more detailed information, seehttp://vmware.com/info?id=152。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">虚拟机已经被配置为64位客户操作系统。然而，64位操作不可用。</span><br><span class="line">此主机支持英特尔虚拟化技术（VT-x），但是英特尔虚拟化技术被禁用了。</span><br><span class="line">如果在BIOS固件设置中，禁用了VT-x，或者改变了这个设置但还没重启主机，它都是无效的。</span><br><span class="line">（1） 检查BIOS/固件设置，启用VT和禁用 <span class="string">'trusted execution.'</span></span><br><span class="line">（2） 如果更改了这些BIOS/固件设置，重启主机。</span><br><span class="line">（3） 安装VMware Workstation，重启主机.</span><br><span class="line">（4） 更新BIOS/固件到最新版本。</span><br><span class="line">更多详细信息，请参阅 http://vmware.com/info?id=152 。</span><br></pre></td></tr></table></figure>
+<p>解决办法：<br>重启开机按F2进入启动菜单界面，选择按F10进入BIOS界面，使用箭头键，滚动到系统设置（configuration）选项，<br>然后方向键滚动到 处理器虚拟化技术（Intel  Virtualization Technology）选项，按enter键，选择启用（Enabled），<br>最后按F10键以保存并退出即可开启VT功能。重新启动计算机。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+            
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-03-09T05:31:14.000Z">2020-03-09</time>
                 
                 <div class="level-item">
@@ -617,130 +743,6 @@
             
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-19T09:31:14.000Z">2019-07-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95%E5%A4%A7%E5%85%A8/">算法大全</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    17 分钟 读完 (大约 2588 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/19/CSP%E4%BA%8C%E5%88%86%E7%B1%BB/">CSP二分类</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="什么是CSP"><a href="#什么是CSP" class="headerlink" title="什么是CSP"></a><a href="https://mrswolf.github.io/zh-cn/2019/01/06/%E8%AF%A6%E8%A7%A3CSP/#CSP%EF%BC%88%E4%BA%8C%E5%88%86%E7%B1%BB%EF%BC%89">什么是CSP</a></h1><p>共空间模式(common spatial pattern,CSP)是脑-机接口领域常用的一类空间滤波算法，尤其在运动想象范式分类上具有较好的效果，是运动想象范式的基准算法之一。目前，CSP及其改进算法的发展速度放缓，看似到达了算法的瓶颈期，近几年没有什么较大的突破。尽管如此，CSP中的一些数学思想对传统脑-机接口算法仍然具有较大的影响力，例如近年运用在SSVEP上的TRCA、DCPM等算法均和CSP有着异曲同工之妙。因此，本文从CSP原始算法出发，讨论其变形和一系列改进算法，试图为读者阐明其中的数学思想。
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/19/CSP%E4%BA%8C%E5%88%86%E7%B1%BB/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-            
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-07-19T03:39:48.000Z">2019-07-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E6%8A%80%E6%9C%AF%E5%B7%A5%E5%85%B7/">技术工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 608 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/07/19/%E4%BD%BF%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E4%B8%BApython%E6%B3%A8%E9%87%8A%E7%94%9F%E6%88%90API%E6%96%87%E6%A1%A3/">使用sphinx快速为python注释生成API文档</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="sphinx简介"><a href="#sphinx简介" class="headerlink" title="sphinx简介"></a>sphinx简介</h3><p><a href="https://zh-sphinx-doc.readthedocs.io/en/latest/intro.html">sphinx是一种基于Python的文档工具</a>，它可以令人轻松的撰写出清晰且优美的文档，由Georg Brandl在BSD许可证下开发。新版的Python3文档就是由sphinx生成的，并且它已成为Python项目首选的文档工具，同时它对C/C++项目也有很好的支持。</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/07/19/%E4%BD%BF%E7%94%A8sphinx%E5%BF%AB%E9%80%9F%E4%B8%BApython%E6%B3%A8%E9%87%8A%E7%94%9F%E6%88%90API%E6%96%87%E6%A1%A3/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-            
-
-
 
     
 <div class="card card-transparent">
@@ -796,7 +798,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            16
+                            18
                         </p>
                     </a>
                 </div>
@@ -1056,6 +1058,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/03/">
