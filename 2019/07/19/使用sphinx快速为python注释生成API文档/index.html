@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="article:published_time" content="2019-07-19T03:39:48.000Z">
-<meta property="article:modified_time" content="2020-04-20T15:32:38.853Z">
+<meta property="article:modified_time" content="2020-04-25T14:35:10.467Z">
 <meta property="article:author" content="zh">
 <meta property="article:tag" content="sphinx">
 <meta property="article:tag" content="python">
@@ -164,17 +164,25 @@
 <h3 id="使用pip进行安装："><a href="#使用pip进行安装：" class="headerlink" title="使用pip进行安装："></a>使用pip进行安装：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install sphinx</span><br></pre></td></tr></table></figure>
 <h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>进入所要生成API文档的目录,输入:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sphinx-quickstart</span><br></pre></td></tr></table></figure>
-<p>基本一路默认向下,设置项目名称与作者，项目名称之后会作为标题显示在文档首页<br><img src="/images/sphinx1.jpg" width="5%" height="5%" style="margin: 0 auto;"><br><img src="/images/sphinx2.jpg" width="5%" height="5%" style="margin: 0 auto;"><br><a href="https://blog.csdn.net/sinat_29957455/article/details/83657029">使用sphinx快速为你python注释生成API文档</a><br><a href="https://blog.csdn.net/liqiancao/article/details/65535444">Sphinx将python代码注释生成文档</a><br>2篇文章的设置略有不同，似乎对结果没有什么影响。</p>
+<p>基本一路默认向下,设置项目名称与作者，项目名称之后会作为标题显示在文档首页</p>
+<img src="/images/sphinx1.jpg" width="100%" height="50%" style="margin: 0 auto;">
+<img src="/images/sphinx2.jpg" width="100%" height="50%" style="margin: 0 auto;">
+
+<p><a href="https://blog.csdn.net/sinat_29957455/article/details/83657029">使用sphinx快速为你python注释生成API文档</a><br><a href="https://blog.csdn.net/liqiancao/article/details/65535444">Sphinx将python代码注释生成文档</a><br>2篇文章的设置略有不同，似乎对结果没有什么影响。</p>
 <h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>进入此文件夹找到conf.py文件，打开编辑,将下面几行代码（第15-17行）取消注释：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.insert(<span class="number">0</span>, os.path.abspath(<span class="string">'.'</span>))</span><br></pre></td></tr></table></figure>
 <p><strong>修改源码存放的目录，这一步一定要改</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.path.insert(<span class="number">0</span>, os.path.abspath(<span class="string">'../src'</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.path.insert(<span class="number">0</span>, os.path.abspath(<span class="string">'/src'</span>))</span><br></pre></td></tr></table></figure>
 <h3 id="生成-rst"><a href="#生成-rst" class="headerlink" title="生成 rst"></a>生成 rst</h3><p>源码目录：src，API目录：API，在同一目录下。<br>在API目录下执行以下命令,会生成对应 python 文件名的 rst 文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sphinx-apidoc -o ./ ../src</span><br></pre></td></tr></table></figure>
-<img src="/images/sphinx3.jpg" width="8%" height="8%" style="margin: 0 auto;">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sphinx-apidoc -o ./ /src</span><br></pre></td></tr></table></figure>
+<img src="/images/sphinx3.jpg" width="100%" height="50%" style="margin: 0 auto;">
 
-<h3 id="生成-html"><a href="#生成-html" class="headerlink" title="生成 html"></a>生成 html</h3><p>执行make指令，生成html文档页<br><img src="/images/sphinx4.jpg" width="5%" height="5%" style="margin: 0 auto;"></p>
-<h3 id="打开-build-html-index-html"><a href="#打开-build-html-index-html" class="headerlink" title="打开_build/html/index.html"></a>打开_build/html/index.html</h3><p>‘bizstyle’主题<br><img src="/images/sphinx5.jpg" width="5%" height="5%" style="margin: 0 auto;"></p>
+<h3 id="生成-html"><a href="#生成-html" class="headerlink" title="生成 html"></a>生成 html</h3><p>执行make指令，生成html文档页</p>
+<img src="/images/sphinx4.jpg" width="100%" height="50%" style="margin: 0 auto;">
+
+<h3 id="打开-build-html-index-html"><a href="#打开-build-html-index-html" class="headerlink" title="打开_build/html/index.html"></a>打开_build/html/index.html</h3><p>‘bizstyle’主题</p>
+<img src="/images/sphinx5.jpg" width="100%" height="50%" style="margin: 0 auto;">
+
 <h3 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h3><p>打开API/conf.py文件，找到html_theme = ‘alabaster’修改即可。<br><a href="https://sphinx-themes.org/">sphinx官方主题</a></p>
 <h3 id="生成pdf"><a href="#生成pdf" class="headerlink" title="生成pdf"></a><a href="http://midday.me/article/4850285372de4991bf05006ae5fd34df">生成pdf</a></h3><p>生成PDF 的方法有很多，主要的我见过两种一种是<a href="https://github.com/rst2pdf/rst2pdf">rst2pdf</a>, 一种是 <a href="http://www.sphinx-doc.org/en/master/usage/builders/index.html#sphinx.builders.latex.LaTeXBuilder">LaTeX builder</a>, 后者可能会更好这里有个<a href="https://docs.typo3.org/typo3cms/extensions/sphinx/stable/AdvancedUsersManual/RenderingPdf/LaTeXVsRst2pdf.html">效果对比</a></p>
 <p>可以使用rst2pdf生成PDF</p>
